@@ -1,66 +1,56 @@
 const checkContinue = confirm('Tell me three most important words 💚');
+const NUMBER_OF_WORDS = 3;
 
 if (checkContinue) {
-
-    let index,
-        word,
-        ifWordNull,
-        ifWordEmpty,
-        ifWordConsistDigit,
-        letterCase,
-        ifNotUppercase,
-        ifNotLowercase,
-        ifNotCapitalize,
-        sentence = '';
-
-
-    for (index = 0; index < 3; index++) {
-
-        //Создал ifWordNull  чтобы код был более читабелен + не хотел загромождать условия внутри while.
-        //       ifWordEmpty            Так же в строках 25,26,27 сделал кастинг на булиан так
-        //       ifWordConsistDigit     как посчитал, что лучше явно приводить переменную к типу, который я имел в виду.
+    let index, sentence = '';
+    for (index = 0; index < NUMBER_OF_WORDS; index++) {
+        let     inputWord,
+                isCanceled,
+                isWordEmpty,
+                isWordConsistDigit,
+                isValidWord,
+                inputLettercase,
+                isUppercase,
+                isLowercase,
+                isCapitalize,
+                isValidLettercase;
 
         do {
-            word = prompt(`Enter word #${index + 1}`);
-            ifWordNull = Boolean(word === null);
-            ifWordEmpty = Boolean(word === '');
-            ifWordConsistDigit = Boolean(/\d/.test(word));
-        } while (ifWordNull || ifWordEmpty || ifWordConsistDigit);
+            inputWord = prompt(`Enter word #${index + 1}`);
+            isCanceled = inputWord === null;
+            isWordEmpty = inputWord === '';
+            isWordConsistDigit = /\d/.test(inputWord);
+            isValidWord = !isCanceled && !isWordEmpty && !isWordConsistDigit;
+        } while (!isValidWord);
 
-        console.log(`Word #${index + 1}: ${word}`);
-
-        //Создал ifNotUppercase  чтобы код был более читабелен + не хотел загромождать условия внутри while
-        //       ifNotLowercase         Так же в строках 38,39,40 сделал кастинг на булиан так
-        //       ifNotCapitalize        как посчитал, что лучше явно приводить переменную к типу, который я имел в виду.
+        console.log(`Word #${index + 1}: ${inputWord}`);
 
         do {
-            letterCase = prompt(`Choose type of transformation for "${word}": uppercase | lowercase | capitalize .`, 'uppercase');
-            ifNotUppercase = Boolean(!(letterCase === 'uppercase'));
-            ifNotLowercase = Boolean(!(letterCase === 'lowercase'));
-            ifNotCapitalize = Boolean(!(letterCase === 'capitalize'));
-        } while (ifNotUppercase && ifNotLowercase && ifNotCapitalize);
+            inputLettercase = prompt(`Choose type of transformation for "${inputWord}": uppercase | lowercase | capitalize .`, 'uppercase');
+            isUppercase = inputLettercase === 'uppercase';
+            isLowercase = inputLettercase === 'lowercase';
+            isCapitalize = inputLettercase === 'capitalize';
+            isValidLettercase = isUppercase || isLowercase || isCapitalize;
+        } while (!isValidLettercase);
 
-        switch (letterCase) {
+        switch (inputLettercase) {
             case 'uppercase':
-                word = word.toUpperCase();
+                inputWord = inputWord.toUpperCase();
                 break;
 
             case 'lowercase':
-                word = word.toLowerCase();
+                inputWord = inputWord.toLowerCase();
                 break;
 
             case 'capitalize':
-                if (word.length === 1) {
-                    word = word.toUpperCase();
-                } else {
-                    word = word.charAt(0).toUpperCase() + word.slice(1);
-                }
+                inputWord = inputWord.toLowerCase();
+                inputWord = inputWord.charAt(0).toUpperCase() + inputWord.slice(1);
                 break;
         }
 
-        console.log(`Transform type for word #${index + 1}: ${letterCase}`);
-        console.log(`Transform word #${index + 1}: ${word}`);
-        sentence = `${sentence} ${word}`;
+        console.log(`Transform type for word #${index + 1}: ${inputLettercase}`);
+        console.log(`Transform word #${index + 1}: ${inputWord}`);
+        sentence = `${sentence} ${inputWord}`;
 
         if (index !== 2) {
             console.log(`Sentence: ${sentence}`)

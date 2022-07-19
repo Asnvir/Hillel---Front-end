@@ -27,6 +27,7 @@ if (checkContinue) {
 
         do {
             inputLettercase = prompt(`Choose type of transformation for "${inputWord}": uppercase | lowercase | capitalize .`, 'uppercase');
+            if(inputLettercase) inputLettercase = inputLettercase.replaceAll(` `,``).toLocaleLowerCase();
             isUppercase = inputLettercase === 'uppercase';
             isLowercase = inputLettercase === 'lowercase';
             isCapitalize = inputLettercase === 'capitalize';

@@ -1,36 +1,25 @@
-let arr = [];
-let numberArrayLength, isArrayLengthNumber;
+const MIN_ARRAY_LENGTH = 2, MAX_ARRAY_LENGTH = 10;
+let arr = [], arrayLength, isValidArrayLength, productArrayElements = 1;
 
 do {
-    const inputArrayLength = prompt(`Enter the length of array. 2 - 10`, `2`);
-    isArrayLengthNumber = !isNaN(inputArrayLength); //Переменная для дальнейшей проверки. Ввели ли мы данные типа Number.
-                                                    //Ведь можем ввести все что угодно.
-    if (isArrayLengthNumber) {   //Если ввели данные типа Number, проверяем дальше.
-        numberArrayLength = Number(inputArrayLength);
-        if (numberArrayLength !== 0) {  //Если inputArrayLength !== 0 или пустой строке или null => проверяем дальше.
+    const inputArrayLength = prompt(`Enter the length of array. ${MIN_ARRAY_LENGTH} - ${MAX_ARRAY_LENGTH}`, `${MIN_ARRAY_LENGTH}`);
+    arrayLength = Number(inputArrayLength) || 0;
 
-            const isNegative = inputArrayLength[0] === `-`; // Является ли inputArrayLength отрицательным числом.
-            numberArrayLength = isNegative ? Math.abs(numberArrayLength) : numberArrayLength;
+    const isNegative = arrayLength < 0;
+    const isInteger = Number.isInteger(arrayLength);
 
-            const izInteger = Number.isInteger(numberArrayLength);// Является ли inputArrayLength рациональным числом.
-            numberArrayLength = izInteger ? numberArrayLength : Math.round(numberArrayLength);
+    arrayLength = isNegative ? Math.abs(arrayLength) : arrayLength;
+    arrayLength = isInteger ? arrayLength : Math.round(arrayLength);
 
-        }
-    }
+    isValidArrayLength = arrayLength >= MIN_ARRAY_LENGTH && arrayLength <= MAX_ARRAY_LENGTH;
 }
-while (!isArrayLengthNumber || numberArrayLength < 2 || numberArrayLength > 10)
+while (!isValidArrayLength)
 
-
-for (let i = 0; i < numberArrayLength; i++) {
-    const randomValue = Math.round(Math.random() * 10);
+for (let i = 0; i < arrayLength; i++) {
+    const randomValue = Math.round(Math.random()*10);
     arr[i] = randomValue;
+    productArrayElements *= randomValue;
 }
 console.log(`Array: ${arr}`);
-
-
-let productArrayElements = 1;
-for (let i = 0; i < numberArrayLength; i++) {
-    productArrayElements *= arr[i];
-}
 console.log(`Product of array\`s elements: ${productArrayElements}`);
 

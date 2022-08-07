@@ -1,25 +1,18 @@
 const hero = ['Ivan'];
 const native = ['York', 'Of'];
 const destination = ['Poltava', 'In'];
-const templateOfArray = ['Richard', 'Of', 'York', 'Gave', 'Battle', 'In', 'Vain'];
-
 
 let rainbow = destination.concat(native, hero);
 rainbow.reverse();
 
+rainbow = ['Richard'].concat(rainbow.slice(1, 3), ['Gave', 'Battle'], rainbow.slice(3));
 
-for (let index = 0; index < templateOfArray.length; index++) {
-    const currentElement = rainbow[index];
-    const shouldBeElement = templateOfArray[index];
-    const isEqual = currentElement === shouldBeElement;
-
-    rainbow[index] = isEqual ? currentElement : shouldBeElement;
-}
 
 let TDs = [];
+const colors = ['red', 'orange', 'yellow', 'green', 'lightblue', 'blue', 'purple'];
 
 for (let i = 0; i < rainbow.length; i++) {
-    TDs.push(`<td><div class="circle"></div><p class="circle-label">${rainbow[i]}</p></td>`);
+    TDs.push(`<td><div class="circle" style="background-color: ${colors[i]}"></div><p class="circle-label">${rainbow[i]}</p></td>`);
 }
 
 document.write(`<table>

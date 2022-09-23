@@ -1,0 +1,30 @@
+*{
+    box-sizing: border-box;
+}
+
+div{
+    margin: 20px auto;
+}
+
+form{
+    text-align: center;
+}
+
+.square{
+    width: 100px;
+    height: 100px;
+}
+
+.rectangle{
+    width: 200px;
+    height: 100px;
+}
+
+.circle{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+
+

@@ -3,38 +3,45 @@ import TableRow from "../tableRow/TableRow";
 import { getRandomInt } from "../../util/util";
 import "./style.sass";
 
-function Table(props) {
-  let { animals, setAnimals, numChangedRows, setNumChangedRows } = props;
+function Table({ animals: propAnimals }) {
+  const [animals, setAnimals] = useState(propAnimals);
+  const numberOfActiveAnimals = animals.filter(
+    (animal) => animal.active
+  ).length;
+
+  const getTableClass = () => {
+    if (numberOfActiveAnimals === animals.length) {
+      return "heavy-border";
+    }
+    if (numberOfActiveAnimals >= animals.length / 2) {
+      return "bold-border";
+    }
+
+    return "";
+  };
 
   useEffect(() => {
-    setInterval(() => {
-      const randomIndex = getRandomInt(0, animals.length);
-      const randomItem = animals[randomIndex];
-      // console.log(animals.length);
-      // console.log(randomIndex);
-      // console.log(randomItem);
-      // console.log(animals);
-      const updatedAnimals = animals.map((item) =>
-        item === randomItem
-          ? Object.assign({}, item, { class: "active" })
-          : item
-      );
+    if (numberOfActiveAnimals === animals.length) {
+      return;
+    }
+    const interval = setInterval(() => {
+      const randomIndex = getRandomInt(0, animals.length - 1);
+      const updatedAnimals = animals.map((animal, index) => {
+        return index === randomIndex ? { ...animal, active: true } : animal;
+      });
       setAnimals(updatedAnimals);
-      // console.log(randomItem);
-      // console.log(animals);
-      // console.log(`--------------`);
-      // if (!randomItem.classList.contains("green")) {
-      //   randomItem.classList.add("green");
-      //   setNumChangedRows((prevState) => prevState + 1);
-      // }
     }, 2000);
-  }, []);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [animals, numberOfActiveAnimals]);
 
   return (
-    <table>
+    <table className={getTableClass()}>
       <tbody>
         {animals.map((item, index) => (
-          <TableRow key={index} item={item} index={index} />
+          <TableRow key={index} item={item} active={item.active} />
         ))}
       </tbody>
     </table>

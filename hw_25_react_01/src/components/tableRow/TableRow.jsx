@@ -1,14 +1,12 @@
 import React from "react";
+import "./style.sass";
 
-function TableRow(props) {
-  const item = props.item;
-  const indexRow = props.index;
-  const isActive = item["class"] === "active";
+function TableRow({ item, active: isActive }) {
   return (
-    <tr key={indexRow} className={isActive ? "active" : undefined}>
-      {Object.keys(item).map((key, itemIndex) =>
-        key !== "class" ? <td key={itemIndex}>{item[key]}</td> : undefined
-      )}
+    <tr className={isActive ? "active" : ""}>
+      {Object.keys(item).map((key, itemIndex) => (
+        <td key={itemIndex}>{item[key]}</td>
+      ))}
     </tr>
   );
 }

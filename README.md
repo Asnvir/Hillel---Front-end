@@ -1,3 +1,3 @@
-# Hillel---Front-end
+# Hillel---Front-end-- JS + React
 Repository for front-end course in Hillel.
-JS + React
+
